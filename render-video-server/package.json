@@ -1,0 +1,13 @@
+{
+  "name": "growthpulse-video-server",
+  "version": "1.0.0",
+  "description": "GrowthPulse BuildUForward Video Render Server",
+  "main": "tts_server.js",
+  "scripts": {
+    "start": "node tts_server.js"
+  },
+  "dependencies": {
+    "msedge-tts": "^2.1.1"
+  }
+}
+
