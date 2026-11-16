@@ -17,6 +17,17 @@ PING_INTERVAL = int(os.environ.get('PING_INTERVAL', 540))  # 9 min default
 
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
+# Auto-hydrate session from environment variable if provided
+SESSION_RAW = os.environ.get('IG_SESSION_JSON', '').strip()
+if SESSION_RAW:
+    try:
+        Path(SESSION_PATH).parent.mkdir(parents=True, exist_ok=True)
+        with open(SESSION_PATH, 'w', encoding='utf-8') as f:
+            f.write(SESSION_RAW)
+        print(f"[IG] Wrote session from IG_SESSION_JSON env var to {SESSION_PATH}")
+    except Exception as e:
+        print(f"[IG] Error writing IG_SESSION_JSON env var: {e}")
+
 # ─── Keep-alive pinger (prevents Render free tier sleep) ─────────────────────
 def _keep_alive():
     if not PING_URL:
