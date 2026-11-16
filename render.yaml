@@ -1,0 +1,34 @@
+services:
+  # 1. n8n Engine + BuildUForward Video Render Engine (All-In-One Container)
+  - type: web
+    name: growthpulse-n8n
+    env: docker
+    dockerfilePath: render-n8n/Dockerfile
+    dockerContext: render-n8n
+    plan: free
+    healthCheckPath: /healthz
+    envVars:
+      - key: N8N_HOST
+        value: 0.0.0.0
+      - key: N8N_PORT
+        value: "5678"
+      - key: N8N_PROTOCOL
+        value: https
+      - key: N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS
+        value: "true"
+
+  # 2. Instagram Publisher Microservice (instagrapi + auto-pinger)
+  - type: web
+    name: growthpulse-ig-publisher
+    env: docker
+    dockerfilePath: render-ig-publisher/Dockerfile
+    dockerContext: render-ig-publisher
+    plan: free
+    healthCheckPath: /health
+    envVars:
+      - key: PORT
+        value: "5051"
+      - key: IG_SESSION_PATH
+        value: /data/ig_session.json
+      - key: PING_INTERVAL
+        value: "540"
