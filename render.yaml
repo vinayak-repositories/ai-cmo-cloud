@@ -6,16 +6,17 @@ services:
     dockerfilePath: render-n8n/Dockerfile
     dockerContext: render-n8n
     plan: free
-    healthCheckPath: /healthz
     envVars:
-      - key: N8N_HOST
-        value: 0.0.0.0
+      - key: PORT
+        value: "5678"
       - key: N8N_PORT
         value: "5678"
+      - key: N8N_HOST
+        value: 0.0.0.0
       - key: N8N_PROTOCOL
         value: https
       - key: N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS
-        value: "true"
+        value: "false"
 
   # 2. Instagram Publisher Microservice (instagrapi + auto-pinger)
   - type: web
@@ -24,7 +25,6 @@ services:
     dockerfilePath: render-ig-publisher/Dockerfile
     dockerContext: render-ig-publisher
     plan: free
-    healthCheckPath: /health
     envVars:
       - key: PORT
         value: "5051"
